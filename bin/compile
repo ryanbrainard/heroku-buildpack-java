@@ -66,7 +66,7 @@ fi
 # clean up non-test stuff
 report_tmp_dir=$(mktemp -d)
 mv target/surefire-reports/* $report_tmp_dir
-rm -rf ./*
+rm -rf ./* \.*
 mkdir -p target/surefire-reports
 mv $report_tmp_dir/* target/surefire-reports 
 rm -rf $report_tmp_dir
