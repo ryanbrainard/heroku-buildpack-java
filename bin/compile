@@ -66,10 +66,13 @@ fi
 # clean up non-test stuff
 report_tmp_dir=$(mktemp -d)
 mv target/surefire-reports/* $report_tmp_dir
-rm -rf ./* \.*
-mkdir -p target/surefire-reports
-mv $report_tmp_dir/* target/surefire-reports 
+cd ..
+rm -rf $BUILD_DIR
+mkdir -p $BUILD_DIR/target/surefire-reports
+mv $report_tmp_dir/* $BUILD_DIR/target/surefire-reports 
 rm -rf $report_tmp_dir
+cd $BUILD_DIR
+
 
 # finalize cache
 if [ "false" == $KEEP_M2_CACHE ]; then
