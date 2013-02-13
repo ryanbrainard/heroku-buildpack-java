@@ -58,17 +58,18 @@ echo "-----> executing $BUILDCMD"
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
 
+if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+  echo " !     Failed to build app with Maven"
+  exit 1
+fi
+
+# clean up non-test stuff
 report_tmp_dir=$(mktemp -d)
 mv target/surefire-reports/* $report_tmp_dir
 rm -rf ./*
 mkdir -p target/surefire-reports
 mv $report_tmp_dir/* target/surefire-reports 
 rm -rf $report_tmp_dir
-
-if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-  echo " !     Failed to build app with Maven"
-  exit 1
-fi
 
 # finalize cache
 if [ "false" == $KEEP_M2_CACHE ]; then
