@@ -67,4 +67,6 @@ mv $report_tmp_dir/* $BUILD_DIR/target/surefire-reports
 rm -rf $report_tmp_dir
 cd $BUILD_DIR
 
+# blow away cache
 rm -rf $CACHE_DIR
+mkdir -p $CACHE_DIR
