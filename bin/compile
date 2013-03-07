@@ -57,14 +57,14 @@ echo "-----> executing $BUILDCMD"
 
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
-# finalize cache
-if [ "false" == $KEEP_M2_CACHE ]; then
-  touch $CACHE_DIR/removeM2Cache
-fi
+# clean up non-test stuff
+report_tmp_dir=$(mktemp -d)
+mv target/surefire-reports/* $report_tmp_dir
+cd ..
+rm -rf $BUILD_DIR
+mkdir -p $BUILD_DIR/target/surefire-reports
+mv $report_tmp_dir/* $BUILD_DIR/target/surefire-reports 
+rm -rf $report_tmp_dir
+cd $BUILD_DIR
 
-#copy .m2 and .maven if needed
-if [ "true" == $KEEP_M2_CACHE ]; then
-  for DIR in ".m2" ".maven" ; do
-    cp -r $CACHE_DIR/$DIR $DIR
-  done
-fi
+rm -rf $CACHE_DIR
