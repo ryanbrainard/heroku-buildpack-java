@@ -76,5 +76,6 @@ fi
 if [ "true" == $KEEP_M2_CACHE ]; then
   for DIR in ".m2" ".maven" ; do
     cp -r $CACHE_DIR/$DIR $DIR
+    rm -rf $DIR
   done
 fi
